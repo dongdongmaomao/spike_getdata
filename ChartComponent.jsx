@@ -23,6 +23,23 @@ const ChartComponent = () => {
             if (chartInstance == null) {
                 const chart = echarts.init(document.getElementById('chart-container'));
                 const option = {
+                    title: [
+                        {
+                            text: '弯矩',
+                            left: 'center',
+                            top: 0
+                        },
+                        {
+                            text: '轴向力',
+                            left: 'center',
+                            top: '33%'
+                        },
+                        {
+                            text: '扭矩',
+                            left: 'center',
+                            top: '66%'
+                        }
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -32,17 +49,59 @@ const ChartComponent = () => {
                             }
                         }
                     },
-                    xAxis: {
-                        type: 'value',
-                        name: 'time'
-                    },
-                    yAxis: {
-                        type: 'value',
-                        name: 'bendingMoment'
-                    },
+                    grid: [
+                        {top: '5%', height: '25%'},
+                        {top: '40%', height: '25%'},
+                        {top: '75%', height: '25%'}
+                    ],
+                    xAxis: [
+                        {
+                            gridIndex: 0,
+                            type: 'value',
+                            name: 'time'
+                        },
+                        {
+                            gridIndex: 1,
+                            type: 'value',
+                            name: 'time'
+                        },
+                        {
+                            gridIndex: 2,
+                            type: 'value',
+                            name: 'time'
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            gridIndex: 0,
+                            type: 'value',
+                        },
+                        {
+                            gridIndex: 1,
+                            type: 'value',
+                        },
+                        {
+                            gridIndex: 2,
+                            type: 'value',
+                        }
+                    ],
                     series: [
                         {
                             type: 'line',
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: []
+                        },
+                        {
+                            type: 'line',
+                            xAxisIndex: 1,
+                            yAxisIndex: 1,
+                            data: []
+                        },
+                        {
+                            type: 'line',
+                            xAxisIndex: 2,
+                            yAxisIndex: 2,
                             data: []
                         }
                     ]
@@ -54,21 +113,31 @@ const ChartComponent = () => {
     }, [loading, error, data]);
     useEffect(() => {
         if (!loading && !error && data && chartInstance) {
-            const xAxisData = data.listSpikes.map(item => item.currentSpikeData.time)[0];
-            const seriesData = data.listSpikes.map(item => item.currentSpikeData.bendingMoment)[0];
+            const newTime_data = data.listSpikes.map(item => item.currentSpikeData.time)[0];
+            const newBendingMoment_data = data.listSpikes.map(item => item.currentSpikeData.bendingMoment)[0];
+            const newAxialForce_data = data.listSpikes.map(item => item.currentSpikeData.axialForce)[0];
+            const newTorsionalMoment_data = data.listSpikes.map(item => item.currentSpikeData.torsionalMoment)[0];
             const option = chartInstance.getOption();
             if (option.series[0].data.length == 0) {
                 option.xAxis[0] = {
                     type: 'value',
                     name: 'time',
-                    min: xAxisData
+                    min: newTime_data
+                };
+                option.xAxis[1] = {
+                    type: 'value',
+                    name: 'time',
+                    min: newTime_data
+                };
+                option.xAxis[2] = {
+                    type: 'value',
+                    name: 'time',
+                    min: newTime_data
                 };
             }
-            const newSeries = {
-                type: 'line',
-                data: [xAxisData, seriesData]
-            };
-            option.series[0].data.push([xAxisData, seriesData]); 
+            option.series[0].data.push([newTime_data, newBendingMoment_data]); 
+            option.series[1].data.push([newTime_data, newAxialForce_data]); 
+            option.series[2].data.push([newTime_data, newTorsionalMoment_data]); 
             chartInstance.setOption(option);
         }
     }, [loading, error, data, chartInstance])
