@@ -2,7 +2,7 @@ React框架下apollo client开发，读取SPIKE数据
 1，用VS CODE
 2，要安装node js
 3，在VS CODE的控制命令行输入npm create vite，输入工程名，并选择React和Javascript，这样就可以生成React脚手架
-(imgs/react_framework1.png)
+<img src="imgs/react_framework1.png"/>
 4，根据提示，分别cd到工程中，用npm i安装相关依赖。如果要执行代码时，首先执行npm run dev
 (imgs/react_framework2.png)
 根据提示，点击localhost:xxx的链接就可以在浏览器中执行客户端了
