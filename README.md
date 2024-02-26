@@ -27,7 +27,11 @@ npm run dev
 
 6，本文件夹中有两个ChartComponent文件，ChartComponent_simple.jsx是用数字显示读取的spike数据，ChartComponent.jsx是结合了echarts将数据用折线图显示。
 
-7，本代码除了开始用npm i安装的React相关依赖以外，还要安装npm i @apollo/client graphql echarts。两个json文件是写代码时安装的依赖库的版本信息。
+7，本代码除了开始用npm i安装的React相关依赖以外，还要安装
+```
+npm i @apollo/client graphql echarts
+```
+两个json文件是写代码时安装的依赖库的版本信息。
 
 8，如果在浏览器中输入ip地址，而不是localhost，修改package.json文件中
 ```
